@@ -4,7 +4,7 @@
 var AuthController = require('../../AuthController');
 var QueryManager = require('../../../models/QueryManager');
 var PathManager = require('../../../models/PathManager');
-var fs = require('fs');
+var FileStream = require('./FileStreamer');
 /*
  * handle all the functions related to the profile images
  */
@@ -29,22 +29,7 @@ function ProfileImagesViewController() {
             statement: 'CALL `spGetProfilePic` ('+user_id+');'
         }
         return QueryManager.callFileManagerQuery(query, function(response) {
-            return getImageFile(response.name+"."+response.extension, response.name, res);
-        })
-    }
-
-    /*
-     * file get the file
-     */
-    function getImageFile(filePath, file, res) {
-        return fs.exists(PathManager.profile_images+filePath, function(exists) {
-            if(exists) {
-                res.writeHead(200, {
-                    'Content-Type': 'application/octet-stream',
-                    'Content-Disposition': 'attachment; filename'+file
-                });
-                return fs.createReadStream(filePath).pipe(res);
-            }
+            return FileStream.fileStream(PathManager.profile_images+response[0][0].name+"."+response[0][0].extension, response[0][0].name, res);
         })
     }
 }
