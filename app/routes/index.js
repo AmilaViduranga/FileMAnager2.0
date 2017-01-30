@@ -6,13 +6,9 @@
  
 var express = require('express');
 var router = express.Router();
-var MapController = require('../Controller/ControllerMap');
-var AuthController = MapController.UserAuthController;
 
-router.get('/test_auth/', function(req, res, next) {
-    AuthController.getId("test_token", function(data) {
-        res.send(data);
-    })
-})
+var ProfileImagesViewRoute = require('./moduleRoutes/DisplayRoutes/ProfileImagesViewRoute');
+
+router.use('/files/profile_image', ProfileImagesViewRoute);
 
 module.exports = router;
