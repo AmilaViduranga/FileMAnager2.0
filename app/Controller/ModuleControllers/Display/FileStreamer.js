@@ -22,6 +22,13 @@ function FileStream() {
                 } catch (err) {
                     console.log(err);
                 }
+            } else {
+                res.writeHead(404, {"Content-Type": "application/json"});
+                res.write(JSON.stringify({
+                    status:404,
+                    message:"File not found"
+                }));
+                res.end();
             }
         });
     }
