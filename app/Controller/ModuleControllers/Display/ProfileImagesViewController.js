@@ -16,6 +16,8 @@ function ProfileImagesViewController() {
         return AuthController.getId(token, function(data) {
             if(data.user_id != null) {
                 return getImageContents(data.user_id, res);
+            } else {
+                return AuthController.AccessDeniedMessage(res);
             }
         })
     }

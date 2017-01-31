@@ -18,6 +18,40 @@ function AuthController(){
             return callback(response[1][0]);
         })
     }
+
+    /*
+     * Access denied message
+     */
+    this.AccessDeniedMessage = function(res) {
+        res.write(JSON.stringify({
+            status: 401,
+            message: 'Access denied. Invalid Token'
+        }));
+        res.send();
+    }
+
+    /*
+     * Unauthorized access
+     */
+    this.unAuthorizedAccess = function(res) {
+        res.writeHead(401, {"Content-Type": "application/json"});
+        res.write(JSON.stringify({
+            status:401,
+            message:'Unauthorized',
+        }));
+        res.send();
+    }
+
+    /*
+     * not available resources in file manager
+     */
+    this.notAvailable = function(res) {
+        res.write(JSON.stringify({
+            status: 401,
+            message: 'Access denied or invalid resource id'
+        }));
+        res.send();
+    }
 }
 
 module.exports = new AuthController();
