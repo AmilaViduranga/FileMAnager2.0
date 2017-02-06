@@ -25,8 +25,8 @@ function ProfileImagesViewController() {
      */
     function getImageContents(user_id, res) {
         var query = {
-            type: QueryManager.callingType.select,
-            statement: 'CALL `spGetProfilePic` ('+user_id+');'
+            type: QueryManager.callingType.insert,
+            statement: 'CALL `fnUploadProfilePicture` ('+user_id+');'
         }
         return QueryManager.callFileManagerQuery(query, function(response) {
             return FileStream.fileStream(PathManager.profile_images+response[0][0].name+"."+response[0][0].extension, response[0][0].name, res);
