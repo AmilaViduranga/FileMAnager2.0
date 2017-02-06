@@ -12,6 +12,8 @@ var Controllers = {
         ProfileImageUploadContoller: require('./ModuleControllers/Uploads/ProfileImageUploadController'),
         SnapUploadController: require('./ModuleControllers/Uploads/snapUploadController'),
         AttachmentUploadController: require('./ModuleControllers/Uploads/attachmentUploadController'),
+        ProfileImagesViewController: require('./ModuleControllers/Display/ProfileImagesViewController'),
+        ResourcesViewController : require('./ModuleControllers/Display/ResourcesViewController')
     }
 
 };

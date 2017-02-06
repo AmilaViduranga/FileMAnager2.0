@@ -86,8 +86,6 @@ function AuthController(){
         }));
         res.send();
     }
-
-
 }
 
 module.exports = new AuthController();
