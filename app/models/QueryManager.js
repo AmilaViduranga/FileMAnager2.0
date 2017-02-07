@@ -1,6 +1,8 @@
 /**
  * Created by EDI-SD04 on 1/28/2017.
  */
+'use strict';
+
 var Connection = require('./Connection');
 
 /*
@@ -21,12 +23,17 @@ function QueryManager(){
      *  @query :- the query object contains type and statement
      */
     this.callFileManagerQuery = function(query, callback) {
+        console.log(query);
         if(query.type == this.callingType.select) {
             return Connection.query(query.statement, { type: Connection.QueryTypes.SELECT}).then(function(response) {
                 return callback(response);
             });
         } else if(query.type == this.callingType.insert) {
-            return Connection.query(query.statement, { type: Connection.QueryTypes.INSERT}).then(function(response) {
+            return Connection.query(query.statement).then(function(response) {
+                return callback(response);
+            });
+        } else if(query.type == this.callingType.update){
+            return Connection.query(query.statement, { type: Connection.QueryTypes.UPDATE }).then(function (response) {
                 return callback(response);
             });
         }

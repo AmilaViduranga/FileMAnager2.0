@@ -1,4 +1,5 @@
 var Sequelize = require('sequelize');
+
 var sequelize = require('sequelize')
     , sequelize = new Sequelize('tutorwizard', 'root', '', {
       dialect: "mysql",
@@ -7,7 +8,8 @@ var sequelize = require('sequelize')
       dialectOptions: {
         multipleStatements: true
       }
-    });
+    })
+    ;
 
 module.exports = sequelize;
 
