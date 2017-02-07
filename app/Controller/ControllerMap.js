@@ -6,9 +6,16 @@
 var Controllers = {
     UserAuthController : require('./AuthController'),
     DisplayController: {
+        ProfileImagesViewController: require('./ModuleControllers/Display/ProfileImagesViewController')
+    },
+    UploadsController: {
+        ProfileImageUploadContoller: require('./ModuleControllers/Uploads/ProfileImageUploadController'),
+        SnapUploadController: require('./ModuleControllers/Uploads/snapUploadController'),
+        AttachmentUploadController: require('./ModuleControllers/Uploads/attachmentUploadController'),
         ProfileImagesViewController: require('./ModuleControllers/Display/ProfileImagesViewController'),
         ResourcesViewController : require('./ModuleControllers/Display/ResourcesViewController')
     }
+
 };
 
 module.exports = Controllers;
