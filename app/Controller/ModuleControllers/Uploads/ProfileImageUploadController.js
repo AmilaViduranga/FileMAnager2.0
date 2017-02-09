@@ -45,19 +45,20 @@ function ProfileUploadController() {
                     /*
                      * insert profile picture to the files
                      * */
-                    console.log(file_path);
-                    console.log(file);
                     return FileUploadManager.uploadFile(file, file_path, res, function (rest) {
 
                         /*
                          * insert thumbnil of the profile image
                          * */
-                        thumbnail.uploadThumbnail(file_path, file_name + '.' + exten);
+                        var thumbnail_path = PathManager.profile_thumbnails + file_name + '.' + exten;
+                        thumbnail.uploadThumbnail(file_path, thumbnail_path);
                         return insertProfileImage(userID, file_name, exten, res);
 
 
                     });
 
+                } else {
+                    AuthController.AccessDeniedMessage(res);
                 }
             });
         }
@@ -81,7 +82,7 @@ function ProfileUploadController() {
 
         return QueryManager.callFileManagerQuery(query, function (response) {
 
-            if (response[0].st = "T") {
+            if (response[0].st == "T") {
                 AuthController.Success(res);
 
             }

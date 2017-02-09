@@ -1,7 +1,7 @@
 /**
  * Created by EDI-SD04 on 1/28/2017.
  */
-
+'use strict';
 
 var AuthController = require('../../AuthController');
 var express = require('express');
@@ -17,7 +17,7 @@ var fileUpload = require('express-fileupload');
 module.exports = {
 
     uploadFile: function (file, file_path, res, callback) {
-        console.log("inside upload file");
+
         if (!file) {
             AuthController.invalidFormat(res);
 
@@ -25,12 +25,11 @@ module.exports = {
         else {
             file.mv(file_path, function (err, response) {
                 if (err) {
-                    console.log("inside err");
+                    console.log(err);
                     AuthController.unSuccess(res);
                 }
                 else {
                     return callback(response);
-                    console.log("inside usucess");
                 }
             });
         }

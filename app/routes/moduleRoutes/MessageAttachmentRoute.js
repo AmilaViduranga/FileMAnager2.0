@@ -1,6 +1,7 @@
 /**
  * Created by EDI-SD-06 on 2/2/2017.
  */
+'use strict';
 
 var express = require('express');
 var fs = require('fs');
@@ -18,8 +19,7 @@ router.post('/', function (req, res, next) {
     var token = req.body.token;
     var messsageID = req.body.msgID;
 
-    console.log("inside route");
-    attachmentUploadController.getUserID(token,sampleFile,messsageID,res, 1)
+    attachmentUploadController.getUserID(token, sampleFile, messsageID, res, 1)
 });
 
 /*
@@ -32,8 +32,7 @@ router.post('/helper', function (req, res, next) {
     var token = req.body.token;
     var messsageID = req.body.msgID;
 
-    console.log("inside route");
-    attachmentUploadController.getUserID(token,sampleFile,messsageID,res, 3)
+    attachmentUploadController.getUserID(token, sampleFile, messsageID, res, 3)
 });
 
 module.exports = router;

@@ -16,11 +16,11 @@ var AuthController = require('../../Controller/AuthController');
 
 router.post('/', function (req, res, next) {
 
-        var sampleFile = req.files.attachment;
-        var token = req.body.token;
-        var messsageID = req.body.reply_id;
-        console.log("inside route");
-        attachmentUploadController.getUserID(token, sampleFile, messsageID, res, 2);
+    var sampleFile = req.files.attachment;
+    var token = req.body.token;
+    var messsageID = req.body.reply_id;
+
+    attachmentUploadController.getUserID(token, sampleFile, messsageID, res, 2);
 
 });
 
@@ -30,13 +30,11 @@ router.post('/', function (req, res, next) {
 
 router.post('/helper', function (req, res, next) {
 
-        var sampleFile = req.files.attachment;
-        var token = req.body.token;
-        var messsageID = req.body.reply_id;
+    var sampleFile = req.files.attachment;
+    var token = req.body.token;
+    var messsageID = req.body.reply_id;
 
-
-        console.log("inside route");
-        attachmentUploadController.getUserID(token, sampleFile, messsageID, res, 4)
+    attachmentUploadController.getUserID(token, sampleFile, messsageID, res, 4)
 
 });
 
