@@ -13,17 +13,13 @@ function validation() {
 
     this.isImage = function (extention) {
         for (var i = 0; i < validImageExtensions.length; i++) {
-            console.log("validate image");
-            console.log(extention);
             if (extention == validImageExtensions[i]) {
                 valid = true;
-                console.log(validImageExtensions[i]);
                 break;
             }
         }
 
         if (!valid) {
-            console.log(validImageExtensions[i]);
             return false;
         }
 

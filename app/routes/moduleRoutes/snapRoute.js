@@ -1,6 +1,7 @@
 /**
  * Created by EDI-SD-06 on 2/1/2017.
  */
+'use strict';
 
 var express = require('express');
 var fs = require('fs');
@@ -19,7 +20,6 @@ router.post('/', function (req, res, next) {
     var token = req.body.token;
     var snap_name = req.body.snap_name;
 
-    console.log("inside route");
     snapUploadController.getUserID(token, sampleFile, snap_name, res);
 });
 
