@@ -27,6 +27,7 @@ function QueryManager() {
             return Connection.query(query.statement, {type: Connection.QueryTypes.SELECT}).then(function (response) {
                 return callback(response);
             }).catch(function(err) {
+                console.log(err);
                 if(err) {
                     return callback({
                         status: 500,
@@ -38,6 +39,7 @@ function QueryManager() {
             return Connection.query(query.statement).then(function (response) {
                 return callback(response);
             }).catch(function(err) {
+                console.log(err);
                 if(err) {
                     return callback({
                         status: 500,
@@ -49,6 +51,7 @@ function QueryManager() {
             return Connection.query(query.statement, {type: Connection.QueryTypes.UPDATE}).then(function (response) {
                 return callback(response);
             }).catch(function (err) {
+                console.log(err);
                 if(err) {
                     return callback({
                         status: 500,

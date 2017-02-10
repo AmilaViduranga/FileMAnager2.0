@@ -12,7 +12,6 @@ var ProfileImagesViewRoute = require('./moduleRoutes/ProfileImagesViewRoute');
 var SnapRoute = require('./moduleRoutes/snapRoute');
 var MessageAttachment = require('./moduleRoutes/MessageAttachmentRoute');
 var ReplyAttachment = require('./moduleRoutes/ReplyAttachmentRoute');
-var ProfileImagesViewRoute = require('./moduleRoutes/ProfileImagesViewRoute');
 var ResourceViewRoute = require('./moduleRoutes/ResourceRoute');
 
 router.use('/files/profile_image', ProfileImagesViewRoute);

@@ -19,63 +19,68 @@ function resourceUploadController() {
      * */
 
     this.getUserID = function (file, token, resName, resTypeID, describe, heading, unit, tags, res) {
-        var file_name = Math.round(microtime.now());
-        var exten = validation.extenConvert(file.mimetype);
+        if(!file || !token || !resName || !resTypeID || !heading || !unit || !tags ){
+            AuthController.nullData(res)
+        }
+        else {
+            var file_name = Math.round(microtime.now());
+            var exten = validation.extenConvert(file.mimetype);
 
-        var animation_path = PathManager.resoursces.animation + file_name + '.' + exten;
-        var interactive_activity_path = PathManager.resoursces.interactive_activities + file_name + '.' + exten;
-        var knowledge_nuget_path = PathManager.resoursces.knowledge_nuget + file_name + '.' + exten;
-        var presentation_path = PathManager.resoursces.presentation + file_name + '.' + exten;
-        var revision_note_path = PathManager.resoursces.revision_note + file_name + '.' + exten;
-        var video_path = PathManager.resoursces.video + file_name + '.' + exten;
-        var worksheet_path = PathManager.resoursces.worksheet + file_name + '.' + exten;
-        var other_path = PathManager.resoursces.other + file_name + '.' + exten;
+            var animation_path = PathManager.resoursces.animation + file_name + '.' + exten;
+            var interactive_activity_path = PathManager.resoursces.interactive_activities + file_name + '.' + exten;
+            var knowledge_nuget_path = PathManager.resoursces.knowledge_nuget + file_name + '.' + exten;
+            var presentation_path = PathManager.resoursces.presentation + file_name + '.' + exten;
+            var revision_note_path = PathManager.resoursces.revision_note + file_name + '.' + exten;
+            var video_path = PathManager.resoursces.video + file_name + '.' + exten;
+            var worksheet_path = PathManager.resoursces.worksheet + file_name + '.' + exten;
+            var other_path = PathManager.resoursces.other + file_name + '.' + exten;
 
-        return AuthController.getId(token, res, function (data) {
-            if (data.user_id != null) {
-                if (resTypeID == 2) {
-                    return FileUploadManager.uploadFile(file, video_path, res, function (data) {
-                        return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
-                    });
-                }
-                else if (resTypeID == 3) {
-                    return FileUploadManager.uploadFile(file, animation_path, res, function (data) {
-                        return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
-                    });
-                }
-                else if (resTypeID == 4) {
-                    return FileUploadManager.uploadFile(file, presentation_path, res, function (data) {
-                        return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
-                    });
-                }
-                else if (resTypeID == 5) {
-                    return FileUploadManager.uploadFile(file, interactive_activity_path, res, function (data) {
-                        return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
-                    });
-                }
-                else if (resTypeID == 6) {
-                    return FileUploadManager.uploadFile(file, knowledge_nuget_path, res, function (data) {
-                        return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
-                    });
-                }
-                else if (resTypeID == 7) {
-                    return FileUploadManager.uploadFile(file, revision_note_path, res, function (data) {
-                        return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
-                    });
-                }
-                else if (resTypeID == 8) {
-                    return FileUploadManager.uploadFile(file, worksheet_path, res, function (data) {
-                        return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
-                    });
-                }
-                else {
-                    return FileUploadManager.uploadFile(file, other_path, res, function (data) {
-                        return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
-                    });
-                }
+            return AuthController.getId(token, res, function (data) {
+                if (data.user_id != null) {
+                    if (resTypeID == 2) {
+                        return FileUploadManager.uploadFile(file, video_path, res, function (data) {
+                            return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
+                        });
+                    }
+                    else if (resTypeID == 3) {
+                        return FileUploadManager.uploadFile(file, animation_path, res, function (data) {
+                            return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
+                        });
+                    }
+                    else if (resTypeID == 4) {
+                        return FileUploadManager.uploadFile(file, presentation_path, res, function (data) {
+                            return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
+                        });
+                    }
+                    else if (resTypeID == 5) {
+                        return FileUploadManager.uploadFile(file, interactive_activity_path, res, function (data) {
+                            return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
+                        });
+                    }
+                    else if (resTypeID == 6) {
+                        return FileUploadManager.uploadFile(file, knowledge_nuget_path, res, function (data) {
+                            return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
+                        });
+                    }
+                    else if (resTypeID == 7) {
+                        return FileUploadManager.uploadFile(file, revision_note_path, res, function (data) {
+                            return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
+                        });
+                    }
+                    else if (resTypeID == 8) {
+                        return FileUploadManager.uploadFile(file, worksheet_path, res, function (data) {
+                            return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
+                        });
+                    }
+                    else {
+                        return FileUploadManager.uploadFile(file, other_path, res, function (data) {
+                            return insertResource(file_name, exten, resName, resTypeID, describe, heading, unit, tags, res);
+                        });
+                    }
 
-            }
-        });
+                }
+            });
+        }
     }
 
     /*
