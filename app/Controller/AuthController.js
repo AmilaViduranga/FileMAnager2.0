@@ -88,6 +88,18 @@ function AuthController() {
         res.send();
     }
 
+    /*
+     * data not found
+     */
+
+    this.nullData = function (res) {
+        res.write(JSON.stringify({
+            status: 404,
+            message: 'Data cannot be found'
+        }));
+        res.send();
+    }
+
 
 }
 

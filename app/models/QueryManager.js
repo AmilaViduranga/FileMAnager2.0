@@ -26,14 +26,35 @@ function QueryManager() {
         if (query.type == this.callingType.select) {
             return Connection.query(query.statement, {type: Connection.QueryTypes.SELECT}).then(function (response) {
                 return callback(response);
+            }).catch(function (err) {
+                if (err) {
+                    return callback({
+                        status: 500,
+                        message: "query error"
+                    });
+                }
             });
         } else if (query.type == this.callingType.insert) {
             return Connection.query(query.statement).then(function (response) {
                 return callback(response);
+            }).catch(function (err) {
+                if (err) {
+                    return callback({
+                        status: 500,
+                        message: "query error"
+                    });
+                }
             });
         } else if (query.type == this.callingType.update) {
             return Connection.query(query.statement, {type: Connection.QueryTypes.UPDATE}).then(function (response) {
                 return callback(response);
+            }).catch(function (err) {
+                if (err) {
+                    return callback({
+                        status: 500,
+                        message: "query error"
+                    });
+                }
             });
         }
     }

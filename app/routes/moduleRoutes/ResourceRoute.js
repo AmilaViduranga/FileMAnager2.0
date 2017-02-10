@@ -10,7 +10,7 @@
 var express = require('express');
 var router = express.Router();
 var ControllerMap = require('../../Controller/ControllerMap');
-var ResourceViewController = ControllerMap.DisplayController.ResourcesViewController;
+var ResourceViewController = ControllerMap.DisplayController.ResourceViewController;
 var ResourceUploadController = ControllerMap.UploadsController.ResourceUploadController;
 
 /*

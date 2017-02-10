@@ -8,11 +8,11 @@
 var express = require('express');
 var router = express.Router();
 var ControllerMap = require('../Controller/ControllerMap');
-var ProfileImagesViewRoute = require('./moduleRoutes/ProfileImagesViewRoute');
-var SnapRoute = require('./moduleRoutes/snapRoute');
+var ProfileImagesViewRoute = require('./moduleRoutes/ProfileImagesRoute');
+var SnapRoute = require('./moduleRoutes/SnapRoute');
 var MessageAttachment = require('./moduleRoutes/MessageAttachmentRoute');
 var ReplyAttachment = require('./moduleRoutes/ReplyAttachmentRoute');
-var ProfileImagesViewRoute = require('./moduleRoutes/ProfileImagesViewRoute');
+var ProfileImagesViewRoute = require('./moduleRoutes/ProfileImagesRoute');
 var ResourceViewRoute = require('./moduleRoutes/ResourceRoute');
 
 router.use('/files/profile_image', ProfileImagesViewRoute);

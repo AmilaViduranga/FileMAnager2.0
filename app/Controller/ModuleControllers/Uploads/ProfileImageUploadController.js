@@ -21,50 +21,55 @@ function ProfileUploadController() {
      * */
 
     this.getUser = function getUser(token, file, res) {
-        var file_name = Math.round(microtime.now());
-        var userID = 0;
+        if (!token || !file) {
+            AuthController.nullData(res);
+        }
+        else {
+            var file_name = Math.round(microtime.now());
+            var userID = 0;
 
-        /*
-         get extension of the image
-         */
-        var exten = validation.extenConvert(file.mimetype);
-        var validImage = validation.isImage(exten);
+            /*
+             get extension of the image
+             */
+            var exten = validation.extenConvert(file.mimetype);
+            var validImage = validation.isImage(exten);
 
-        /*
-         file saving path set
-         */
-        var file_path = PathManager.profile_images + file_name + '.' + exten;
+            /*
+             file saving path set
+             */
+            var file_path = PathManager.profile_images + file_name + '.' + exten;
 
 
-        if (validImage == true) {
+            if (validImage == true) {
 
-            return AuthController.getId(token, res, function (data) {
-                if (data.user_id != null) {
-                    userID = data.user_id;
-
-                    /*
-                     * insert profile picture to the files
-                     * */
-                    return FileUploadManager.uploadFile(file, file_path, res, function (rest) {
+                return AuthController.getId(token, res, function (data) {
+                    if (data.user_id != null) {
+                        userID = data.user_id;
 
                         /*
-                         * insert thumbnil of the profile image
+                         * insert profile picture to the files
                          * */
-                        var thumbnail_path = PathManager.profile_thumbnails + file_name + '.' + exten;
-                        thumbnail.uploadThumbnail(file_path, thumbnail_path);
-                        return insertProfileImage(userID, file_name, exten, res);
+                        return FileUploadManager.uploadFile(file, file_path, res, function (rest) {
+
+                            /*
+                             * insert thumbnil of the profile image
+                             * */
+                            var thumbnail_path = PathManager.profile_thumbnails + file_name + '.' + exten;
+                            thumbnail.uploadThumbnail(file_path, thumbnail_path);
+                            return insertProfileImage(userID, file_name, exten, res);
 
 
-                    });
+                        });
 
-                } else {
-                    AuthController.AccessDeniedMessage(res);
-                }
-            });
-        }
+                    } else {
+                        AuthController.AccessDeniedMessage(res);
+                    }
+                });
+            }
 
-        else {
-            AuthController.invalidFormat(res);
+            else {
+                AuthController.invalidFormat(res);
+            }
         }
     }
 
@@ -82,7 +87,7 @@ function ProfileUploadController() {
 
         return QueryManager.callFileManagerQuery(query, function (response) {
 
-            if (response[0].st == "T") {
+            if (response[1]["0"].st == "T") {
                 AuthController.Success(res);
 
             }

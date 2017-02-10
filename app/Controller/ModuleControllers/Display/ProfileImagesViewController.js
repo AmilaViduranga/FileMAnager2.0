@@ -13,7 +13,7 @@ function ProfileImagesViewController() {
      * get the exact profile image
      */
     this.getImageUser = function(token, res) {
-        return AuthController.getId(token, function(data) {
+        return AuthController.getId(token, res, function(data) {
             if(data.user_id != null) {
                 return getImageContents(data.user_id, res);
             } else {
@@ -28,7 +28,7 @@ function ProfileImagesViewController() {
     function getImageContents(user_id, res) {
         var query = {
             type: QueryManager.callingType.insert,
-            statement: 'CALL `fnUploadProfilePicture` ('+user_id+');'
+            statement: 'CALL `spUploadProfilePicture` ('+user_id+');'
         }
         return QueryManager.callFileManagerQuery(query, function(response) {
             return FileStream.fileStream(PathManager.profile_images+response[0][0].name+"."+response[0][0].extension, response[0][0].name, res);

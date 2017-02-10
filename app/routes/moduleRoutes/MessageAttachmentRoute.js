@@ -8,6 +8,34 @@ var fs = require('fs');
 var router = express.Router();
 var ControllerMap = require('../../Controller/ControllerMap');
 var attachmentUploadController = ControllerMap.UploadsController.AttachmentUploadController;
+var attachmentViewController = ControllerMap.DisplayController.AttachmentViewController;
+
+
+/**
+ * get attachment for messages
+ *
+ * **/
+
+router.get('/:token/:msgID',function (req,res,next) {
+    var token = req.params.token;
+    var msgID = req.params.msgID;
+
+    attachmentViewController.getUserID(token, msgID, res);
+});
+
+
+/**
+ * get attachment for helper messages
+ *
+ * **/
+
+router.get('/helper/:token/:msgID',function (req,res,next) {
+    var token = req.params.token;
+    var msgID = req.params.msgID;
+
+    attachmentViewController.getUserID(token, msgID, res);
+});
+
 
 /*
  * post profile image file to file manager and db
