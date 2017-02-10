@@ -11,11 +11,13 @@ function AuthController() {
      * get the user id for given token
      */
     this.getId = function (token, res, callback) {
-
         return queryManager.callFileManagerQuery({
             type: queryManager.callingType.select,
             statement: 'CALL `spGetUserToken` ( "' + token + '" ,@userID , @role); Select @userID as user_id, @user_role as user_role'
         }, function (response) {
+            if(response.status == 500) {
+                return AuthController.unSuccess(res);
+            }
             return callback(response[1][0]);
         })
     }
