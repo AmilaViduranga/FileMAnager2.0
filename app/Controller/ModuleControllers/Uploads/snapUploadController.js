@@ -19,46 +19,52 @@ function snapUploadController() {
      * **/
 
     this.getUserID = function (token, file, snap_name, res) {
-        var file_name = Math.round(microtime.now());
-        var userID = 0;
+        if (!token || !file || !snap_name) {
+            AuthController.nullData(res);
+        }
+        else {
+            var file_name = Math.round(microtime.now());
+            var userID = 0;
 
-        /*
-         get extension of the image
-         */
-        var exten = validation.extenConvert(file.mimetype);
-        var validImage = validation.isImage(exten);
+            /*
+             get extension of the image
+             */
+            var exten = validation.extenConvert(file.mimetype);
+            var validImage = validation.isImage(exten);
 
-        /*
-         file saving path set
-         */
-        var file_path = PathManager.snap + file_name + '.' + exten;
-        var thumbnail_path = PathManager.snap_thumbnail + file_name + '.' + exten;
+            /*
+             file saving path set
+             */
+            var file_path = PathManager.snap + file_name + '.' + exten;
+            var thumbnail_path = PathManager.snap_thumbnail + file_name + '.' + exten;
 
-        if (validImage == true) {
-            return AuthController.getId(token, res, function (data) {
-                if (data.user_id != null) {
-                    userID = data.user_id;
-                    /*
-                     * inser snap to the folder
-                     * */
-
-                    return FileUploadManager.uploadFile(file, file_path, res, function (data) {
+            if (validImage == true) {
+                return AuthController.getId(token, res, function (data) {
+                    if (data.user_id != null) {
+                        userID = data.user_id;
                         /*
-                         * insert snap thumbnail
+                         * inser snap to the folder
                          * */
 
-                        thumbnail.uploadThumbnail(file_path, thumbnail_path);
-                        return InsertSnap(userID, file_name, exten, snap_name, res);
-                    });
-                }
-                else {
-                    AuthController.AccessDeniedMessage(res);
-                }
-            });
+                        return FileUploadManager.uploadFile(file, file_path, res, function (data) {
+                            /*
+                             * insert snap thumbnail
+                             * */
 
-        } else {
-            AuthController.invalidFormat(res);
+                            thumbnail.uploadThumbnail(file_path, thumbnail_path);
+                            return InsertSnap(userID, file_name, exten, snap_name, res);
+                        });
+                    }
+                    else {
+                        AuthController.AccessDeniedMessage(res);
+                    }
+                });
+
+            } else {
+                AuthController.invalidFormat(res);
+            }
         }
+
     }
 
     /**

@@ -22,48 +22,51 @@ function attachmentUploadController() {
      * **/
 
     this.getUserID = function (token, file, messageID, res, type) {
+        if(!token || !file || !messageID){
+            AuthController.nullData(res);
+        }
+        else {
+            var file_name = Math.round(microtime.now());
+            var exten = validation.extenConvert(file.mimetype);
 
-        var file_name = Math.round(microtime.now());
-        var exten = validation.extenConvert(file.mimetype);
+            var student_path = PathManager.attachment.student + file_name + '.' + exten;
+            var helper_path = PathManager.attachment.helper + file_name + '.' + exten;
 
-        var student_path = PathManager.attachment.student + file_name + '.' + exten;
-        var helper_path = PathManager.attachment.helper + file_name + '.' + exten;
+            return AuthController.getId(token, res, function (data) {
+                if (data.user_id != null) {
+                    /*
+                     * insert student messages
+                     * */
 
-        return AuthController.getId(token, res, function (data) {
-            if (data.user_id != null) {
-                /*
-                 * insert student messages
-                 * */
+                    if (type == 1 || type == 2) {
+                        return FileUploadManager.uploadFile(file, student_path, res, function (data) {
+                            if (type == 1)
+                                return insertMessageAttachment(file_name, exten, messageID, res);
+                            else if (type == 2)
+                                return insertReplyAttachment(file_name, exten, messageID, res);
+                            else
+                                AuthController.unSuccess(res);
+                        });
+                    }
+                    /*
+                     * insert helper messages
+                     * */
 
-                if (type == 1 || type == 2) {
-                    return FileUploadManager.uploadFile(file, student_path, res, function (data) {
-                        if (type == 1)
-                            return insertMessageAttachment(file_name, exten, messageID, res);
-                        else if (type == 2)
-                            return insertReplyAttachment(file_name, exten, messageID, res);
-                        else
-                            AuthController.unSuccess(res);
-                    });
+                    else if (type == 3 || type == 4) {
+                        return FileUploadManager.uploadFile(file, helper_path, res, function (data) {
+                            if (type == 3)
+                                return insertTutorHelpMessageAttachment(file_name, exten, messageID, res);
+                            else if (type == 4)
+                                return insertTutorHelpReplyAttachment(file_name, exten, messageID, res);
+                            else
+                                AuthController.unSuccess(res);
+                        });
+                    }
+                    else
+                        AuthController.unSuccess(res);
                 }
-                /*
-                 * insert helper messages
-                 * */
-
-                else if (type == 3 || type == 4) {
-                    return FileUploadManager.uploadFile(file, helper_path, res, function (data) {
-                        if (type == 3)
-                            return insertTutorHelpMessageAttachment(file_name, exten, messageID, res);
-                        else if (type == 4)
-                            return insertTutorHelpReplyAttachment(file_name, exten, messageID, res);
-                        else
-                            AuthController.unSuccess(res);
-                    });
-                }
-                else
-                    AuthController.unSuccess(res);
-            }
-        });
-
+            });
+        }
     }
 
     /**
@@ -124,7 +127,7 @@ function attachmentUploadController() {
         }
 
         return QueryManager.callFileManagerQuery(query, function (response) {
-            if (response[0].st == "T") {
+            if (response[1]["0"].st == "T") {
                 AuthController.Success(res);
 
             }
@@ -147,7 +150,7 @@ function attachmentUploadController() {
 
         return QueryManager.callFileManagerQuery(query, function (response) {
 
-            if (response[0].st == "T") {
+            if (response[1]["0"].st == "T") {
                 AuthController.Success(res);
 
             }
