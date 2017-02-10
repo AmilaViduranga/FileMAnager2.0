@@ -4,7 +4,8 @@
 var Controllers = {
     UserAuthController: require('./AuthController'),
     DisplayController: {
-        ProfileImagesViewController: require('./ModuleControllers/Display/ProfileImagesViewController')
+        ProfileImagesViewController: require('./ModuleControllers/Display/ProfileImagesViewController'),
+        ResourcesViewController: require('./ModuleControllers/Display/ResourcesViewController')
     },
     UploadsController: {
         ProfileImageUploadContoller: require('./ModuleControllers/Uploads/ProfileImageUploadController'),

@@ -12,10 +12,10 @@ function ProfileImagesViewController() {
     /*
      * get the exact profile image
      */
-    this.getImageUser = function(token, res) {
-        return AuthController.getId(token, function(data) {
+    this.getImageUser = function(token, neededType, res) {
+        return AuthController.getId(token, res, function(data) {
             if(data.user_id != null) {
-                return getImageContents(data.user_id, res);
+                return getImageContents(data.user_id, neededType, res);
             } else {
                 return AuthController.AccessDeniedMessage(res);
             }
@@ -25,13 +25,20 @@ function ProfileImagesViewController() {
     /*
      * use to get the image name from db
      */
-    function getImageContents(user_id, res) {
+    function getImageContents(user_id, type, res) {
         var query = {
             type: QueryManager.callingType.insert,
-            statement: 'CALL `fnUploadProfilePicture` ('+user_id+');'
+            statement: 'CALL `spGetProfilePic` ('+user_id+');'
         }
         return QueryManager.callFileManagerQuery(query, function(response) {
-            return FileStream.fileStream(PathManager.profile_images+response[0][0].name+"."+response[0][0].extension, response[0][0].name, res);
+            if(response.status == 500) {
+                return AuthController.unSuccess(res);
+            }
+            if(type == "profile") {
+                return FileStream.fileStream(PathManager.profile_images+response[0].name+"."+response[0].extension, response[0].name, res);
+            } else if(type == "profile_tubline") {
+                return FileStream.fileStream(PathManager.profile_thumbnails+response[0].name+"."+response[0].extension, response[0].name, res);
+            }
         })
     }
 }

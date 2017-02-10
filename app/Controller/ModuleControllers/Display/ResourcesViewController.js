@@ -11,7 +11,7 @@ function ResourcesViewController() {
      * get the file with validation checkup
      */
     this.getResource = function(token, resourceId, res) {
-        return AuthController.getId(token, function(data) {
+        return AuthController.getId(token, res, function(data) {
             if(data != null) {
                 return QueryManager.callFileManagerQuery({
                     type: QueryManager.callingType.select,
@@ -24,7 +24,7 @@ function ResourcesViewController() {
                                     if(data) {
                                         return locationFinder(data[0][0], function(basePath) {
                                             if(basePath) {
-                                                return FileStream.fileStream(basePath+data[0][0].name+data[0][0].extension, data[0][0], res);
+                                                return FileStream.fileStream(basePath+data[0][0].name+"."+data[0][0].extension, data[0][0], res);
                                             } else {
                                                 return AuthController.notAvailable(res);
                                             }
