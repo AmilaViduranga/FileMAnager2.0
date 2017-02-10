@@ -16,7 +16,7 @@ function AuthController() {
             statement: 'CALL `spGetUserToken` ( "' + token + '" ,@userID , @role); Select @userID as user_id, @user_role as user_role'
         }, function (response) {
             if(response.status == 500) {
-                return AuthController.unSuccess(res);
+                return unSuccess(res);
             }
             return callback(response[1][0]);
         })
@@ -70,7 +70,7 @@ function AuthController() {
     /*
      * upload file unsucessfull
      */
-    this.unSuccess = function (res) {
+     function unSuccess(res) {
         res.write(JSON.stringify({
             status: 500,
             message: 'Server error'
@@ -90,7 +90,16 @@ function AuthController() {
         res.send();
     }
 
-
+    /*
+     * data not found
+     */
+    this.nullData = function (res) {
+        res.write(JSON.stringify({
+            status: 404,
+            message: 'Data cannot be found'
+        }));
+        res.send();
+    }
 }
 
 module.exports = new AuthController();

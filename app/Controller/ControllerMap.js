@@ -5,7 +5,9 @@ var Controllers = {
     UserAuthController: require('./AuthController'),
     DisplayController: {
         ProfileImagesViewController: require('./ModuleControllers/Display/ProfileImagesViewController'),
-        ResourcesViewController: require('./ModuleControllers/Display/ResourcesViewController')
+        ResourcesViewController: require('./ModuleControllers/Display/ResourcesViewController'),
+        SnapViewController: require('./ModuleControllers/Display/SnapViewController'),
+        AttachmentViewController : require('./ModuleControllers/Display/AttachmentViewController')
     },
     UploadsController: {
         ProfileImageUploadContoller: require('./ModuleControllers/Uploads/ProfileImageUploadController'),
