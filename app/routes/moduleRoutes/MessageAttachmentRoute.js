@@ -35,4 +35,18 @@ router.post('/helper', function (req, res, next) {
     attachmentUploadController.getUserID(token, sampleFile, messsageID, res, 3)
 });
 
+    /*
+     * post students' massage file to file manager and db
+     * developed by Ruwan
+     * */
+router.post('/student', function (req, res, next) {
+
+    var sampleFile = req.files.attachment;
+    var token = req.body.token;
+    var messsageID = req.body.msgID;
+
+    console.log("test");
+    res.end();
+});
+
 module.exports = router;
