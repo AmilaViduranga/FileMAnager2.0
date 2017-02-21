@@ -32,9 +32,19 @@ app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  // var err = new Error('Not Found');
+  // err.status = 404;
+  // next(err);
+
+  /*
+  *  changed by Ruwan
+  * */
+  res.statusCode = 404;
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({
+    status:404,
+    message: "API not found"
+  }));
 });
 
 // error handlers
@@ -61,7 +71,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var server = app.listen(8002,'localhost', function() {
+var server = app.listen(8002,'192.168.1.17', function() {
   console.log('Server listening on port ' + server.address().port);
 });
 module.exports = app;

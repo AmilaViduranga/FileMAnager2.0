@@ -17,6 +17,7 @@ var ProfileImageUploadController = ControllerMap.UploadsController.ProfileImageU
  * get the profile image of user
  */
 router.get('/:token', function (req, res, next) {
+    console.log("Find route");
     ProfileImageViewController.getImageUser(req.params.token, "profile", res);
 });
 
